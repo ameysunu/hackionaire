@@ -4,12 +4,16 @@ import 'package:hexcolor/hexcolor.dart';
 final timeController = TextEditingController();
 final topicController = TextEditingController();
 
+enum SingingCharacter { dad, mom, brother, sister, grandpa, grandma }
+
 class Fam extends StatefulWidget {
   @override
   _FamState createState() => _FamState();
 }
 
 class _FamState extends State<Fam> {
+  SingingCharacter _character = SingingCharacter.dad;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,6 +75,106 @@ class _FamState extends State<Fam> {
                   ),
                 ),
               ),
+              Column(
+                children: [
+                  ListTile(
+                    title: const Text(
+                      'Dad',
+                      style:
+                          TextStyle(fontFamily: 'Roboto Regular', fontSize: 20),
+                    ),
+                    leading: Radio(
+                      value: SingingCharacter.dad,
+                      groupValue: _character,
+                      onChanged: (SingingCharacter value) {
+                        setState(() {
+                          _character = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text(
+                      'Mom',
+                      style:
+                          TextStyle(fontFamily: 'Roboto Regular', fontSize: 20),
+                    ),
+                    leading: Radio(
+                      value: SingingCharacter.mom,
+                      groupValue: _character,
+                      onChanged: (SingingCharacter value) {
+                        setState(() {
+                          _character = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text(
+                      'Brother',
+                      style:
+                          TextStyle(fontFamily: 'Roboto Regular', fontSize: 20),
+                    ),
+                    leading: Radio(
+                      value: SingingCharacter.brother,
+                      groupValue: _character,
+                      onChanged: (SingingCharacter value) {
+                        setState(() {
+                          _character = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text(
+                      'Sister',
+                      style:
+                          TextStyle(fontFamily: 'Roboto Regular', fontSize: 20),
+                    ),
+                    leading: Radio(
+                      value: SingingCharacter.sister,
+                      groupValue: _character,
+                      onChanged: (SingingCharacter value) {
+                        setState(() {
+                          _character = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text(
+                      'Grandpa',
+                      style:
+                          TextStyle(fontFamily: 'Roboto Regular', fontSize: 20),
+                    ),
+                    leading: Radio(
+                      value: SingingCharacter.grandpa,
+                      groupValue: _character,
+                      onChanged: (SingingCharacter value) {
+                        setState(() {
+                          _character = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text(
+                      'Grandma',
+                      style:
+                          TextStyle(fontFamily: 'Roboto Regular', fontSize: 20),
+                    ),
+                    leading: Radio(
+                      value: SingingCharacter.grandma,
+                      groupValue: _character,
+                      onChanged: (SingingCharacter value) {
+                        setState(() {
+                          _character = value;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),
