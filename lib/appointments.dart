@@ -110,8 +110,125 @@ class _AppointmentsState extends State<Appointments> {
         backgroundColor: HexColor('#00A0CF'),
         child: Icon(Icons.add),
         onPressed: () {
-          null;
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return Add();
+              },
+            ),
+          );
         },
+      ),
+    );
+  }
+}
+
+class Add extends StatefulWidget {
+  @override
+  _AddState createState() => _AddState();
+}
+
+class _AddState extends State<Add> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: HexColor('#0DF0FF'),
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        backgroundColor: HexColor('#0DF0FF'),
+        title: Text(
+          "Make an appointment",
+          style: TextStyle(fontFamily: 'Roboto Medium', color: Colors.black),
+        ),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  "GROUPS +",
+                  style: TextStyle(
+                      fontFamily: 'Roboto Regular',
+                      fontSize: 20,
+                      color: Colors.black),
+                ),
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.05,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: InkWell(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    width: MediaQuery.of(context).size.width * 1,
+                    color: HexColor('#FFE8F7'),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(70, 0, 70, 0),
+                      child: Container(
+                        color: HexColor('#0DF0FF'),
+                        child: Center(
+                            child: Text(
+                          "Family",
+                          style: TextStyle(
+                              fontFamily: 'Roboto Regular', fontSize: 20),
+                        )),
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    null;
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.1,
+                  width: MediaQuery.of(context).size.width * 1,
+                  color: HexColor('#FFE8F7'),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(70, 0, 70, 0),
+                    child: Container(
+                      color: HexColor('#0DF0FF'),
+                      child: Center(
+                          child: Text(
+                        "Cousins",
+                        style: TextStyle(
+                            fontFamily: 'Roboto Regular', fontSize: 20),
+                      )),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.1,
+                  width: MediaQuery.of(context).size.width * 1,
+                  color: HexColor('#FFE8F7'),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(70, 0, 70, 0),
+                    child: Container(
+                      color: HexColor('#0DF0FF'),
+                      child: Center(
+                          child: Text(
+                        "Study Group",
+                        style: TextStyle(
+                            fontFamily: 'Roboto Regular', fontSize: 20),
+                      )),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
