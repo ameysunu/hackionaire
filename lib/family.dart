@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hackionaire/appointments.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:google_speech/google_speech.dart';
 
 final timeController = TextEditingController();
 final topicController = TextEditingController();

@@ -30,6 +30,8 @@
 .pub-cache/
 .pub/
 /build/
+/assets/test_service_account.json
+/assets/ivyhacks-iytt-a984e97ac0e5.json
 
 # Web related
 lib/generated_plugin_registrant.dart
