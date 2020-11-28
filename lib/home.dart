@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hackionaire/appointments.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class Home extends StatefulWidget {
@@ -63,7 +64,7 @@ class _HomeState extends State<Home> {
                             style: TextStyle(fontFamily: 'Roboto Medium'),
                           ),
                           onPressed: () {
-                            null;
+                            _yesDialog(context);
                           },
                         ),
                       ),
@@ -79,7 +80,7 @@ class _HomeState extends State<Home> {
                             style: TextStyle(fontFamily: 'Roboto Medium'),
                           ),
                           onPressed: () {
-                            null;
+                            _noDialog(context);
                           },
                         ),
                       ),
@@ -103,4 +104,80 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+}
+
+void _yesDialog(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Center(
+            child: Text(
+              "Way to go! Nice work 😇",
+              style: TextStyle(fontFamily: 'Roboto Medium'),
+            ),
+          ),
+          content: RaisedButton(
+            color: Colors.black,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Done",
+                  style: TextStyle(
+                      color: Colors.white, fontFamily: 'Roboto Medium'),
+                ),
+              ],
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return Appointments();
+                  },
+                ),
+              );
+            },
+          ),
+        );
+      });
+}
+
+void _noDialog(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Center(
+            child: Text(
+              "Woah! That's not good 😞",
+              style: TextStyle(fontFamily: 'Roboto Medium'),
+            ),
+          ),
+          content: RaisedButton(
+            color: Colors.black,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Ok",
+                  style: TextStyle(
+                      color: Colors.white, fontFamily: 'Roboto Medium'),
+                ),
+              ],
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return Appointments();
+                  },
+                ),
+              );
+            },
+          ),
+        );
+      });
 }
