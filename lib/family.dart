@@ -280,9 +280,10 @@ class _FamState extends State<Fam> {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Card(
+        color: HexColor('#226C7D'),
         child: SingleChildScrollView(
           child: Container(
-            height: 150,
+            height: 170,
             width: MediaQuery.of(context).size.width * 1,
             child: SingleChildScrollView(
               child: Column(
@@ -294,7 +295,7 @@ class _FamState extends State<Fam> {
                     ),
                   RaisedButton(
                     onPressed: recognizing ? stopRecording : streamingRecognize,
-                    child: recognizing ? Text('Turn off') : Text('Subtitles'),
+                    child: recognizing ? Text('Turn off') : Text('Speak'),
                   ),
                 ],
               ),
@@ -333,17 +334,43 @@ class _RecognizeContent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Subtitles',
+                'Custom Topic',
+                style:
+                    TextStyle(fontFamily: 'Roboto Medium', color: Colors.white),
               ),
+              IconButton(
+                icon: Icon(
+                  Icons.done,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  firestoreInstance
+                      .collection("appointments")
+                      .doc('new')
+                      .update({
+                    "time": timeController.text,
+                    "topic": text,
+                    "name": "MOM",
+                  }).then((_) {
+                    print("success!");
+                  });
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return Appointments();
+                      },
+                    ),
+                  );
+                },
+              )
             ],
           ),
           SizedBox(
             height: 16.0,
           ),
-          Text(
-            text,
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
+          Text(text,
+              style:
+                  TextStyle(fontFamily: 'Roboto Medium', color: Colors.white)),
         ],
       ),
     );
