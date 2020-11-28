@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hackionaire/appointments.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:google_speech/google_speech.dart';
+import 'package:sound_stream/sound_stream.dart';
 
 final timeController = TextEditingController();
 final topicController = TextEditingController();
@@ -17,7 +19,63 @@ class Fam extends StatefulWidget {
 }
 
 class _FamState extends State<Fam> {
+  bool recognizing = false;
+  bool recognizeFinished = false;
+  String text = '';
+  static final _users = <int>[];
+  final _infoStrings = <String>[];
+  bool muted = false;
+
+  final RecorderStream _recorder = RecorderStream();
   SingingCharacter _character = SingingCharacter.dad;
+
+  @override
+  void initState() {
+    super.initState();
+    _recorder.initialize();
+  }
+
+  void streamingRecognize() async {
+    await _recorder.start();
+
+    setState(() {
+      recognizing = true;
+    });
+    final serviceAccount = ServiceAccount.fromString(
+        '${(await rootBundle.loadString('assets/test_service_account.json'))}');
+    final speechToText = SpeechToText.viaServiceAccount(serviceAccount);
+    final config = _getConfig();
+
+    final responseStream = speechToText.streamingRecognize(
+        StreamingRecognitionConfig(config: config, interimResults: true),
+        _recorder.audioStream);
+
+    responseStream.listen((data) {
+      setState(() {
+        text =
+            data.results.map((e) => e.alternatives.first.transcript).join('\n');
+        recognizeFinished = true;
+      });
+    }, onDone: () {
+      setState(() {
+        recognizing = false;
+      });
+    });
+  }
+
+  void stopRecording() async {
+    await _recorder.stop();
+    setState(() {
+      recognizing = false;
+    });
+  }
+
+  RecognitionConfig _getConfig() => RecognitionConfig(
+      encoding: AudioEncoding.LINEAR16,
+      model: RecognitionModel.basic,
+      enableAutomaticPunctuation: true,
+      sampleRateHertz: 16000,
+      languageCode: 'en-US');
 
   @override
   Widget build(BuildContext context) {
@@ -209,7 +267,37 @@ class _FamState extends State<Fam> {
                     ),
                   ),
                 ),
+                subtitles()
               ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget subtitles() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Card(
+        child: SingleChildScrollView(
+          child: Container(
+            height: 150,
+            width: MediaQuery.of(context).size.width * 1,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  if (recognizeFinished)
+                    _RecognizeContent(
+                      text: text,
+                    ),
+                  RaisedButton(
+                    onPressed: recognizing ? stopRecording : streamingRecognize,
+                    child: recognizing ? Text('Turn off') : Text('Subtitles'),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -227,4 +315,37 @@ void newRecord() async {
   }).then((_) {
     print("success!");
   });
+}
+
+class _RecognizeContent extends StatelessWidget {
+  final String text;
+
+  const _RecognizeContent({Key key, this.text}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: <Widget>[
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Subtitles',
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 16.0,
+          ),
+          Text(
+            text,
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
+        ],
+      ),
+    );
+  }
 }
