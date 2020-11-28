@@ -111,6 +111,7 @@ void _yesDialog(BuildContext context) {
       context: context,
       builder: (context) {
         return AlertDialog(
+          backgroundColor: HexColor('#FFE8F7'),
           title: Center(
             child: Text(
               "Way to go! Nice work 😇",
@@ -118,14 +119,14 @@ void _yesDialog(BuildContext context) {
             ),
           ),
           content: RaisedButton(
-            color: Colors.black,
+            color: HexColor('#A2B3D1'),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   "Done",
                   style: TextStyle(
-                      color: Colors.white, fontFamily: 'Roboto Medium'),
+                      color: Colors.black, fontFamily: 'Roboto Medium'),
                 ),
               ],
             ),
@@ -149,6 +150,7 @@ void _noDialog(BuildContext context) {
       context: context,
       builder: (context) {
         return AlertDialog(
+          backgroundColor: HexColor('#FFE8F7'),
           title: Center(
             child: Text(
               "Woah! That's not good 😞",
@@ -156,14 +158,14 @@ void _noDialog(BuildContext context) {
             ),
           ),
           content: RaisedButton(
-            color: Colors.black,
+            color: HexColor('#A2B3D1'),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   "Ok",
                   style: TextStyle(
-                      color: Colors.white, fontFamily: 'Roboto Medium'),
+                      color: Colors.black, fontFamily: 'Roboto Medium'),
                 ),
               ],
             ),

@@ -92,9 +92,12 @@ class _AppointmentsState extends State<Appointments> {
                       return Text("Something went wrong");
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Container(
-                        child: Center(
-                          child: CircularProgressIndicator(),
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
                         ),
                       );
                     }
