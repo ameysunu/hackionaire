@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:hackionaire/family.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 Future<DocumentSnapshot> getUserInfo() async {
@@ -182,7 +183,13 @@ class _AddState extends State<Add> {
                     ),
                   ),
                   onTap: () {
-                    null;
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return Fam();
+                        },
+                      ),
+                    );
                   },
                 ),
               ),
