@@ -32,7 +32,7 @@ class _LoginState extends State<Login> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.fromLTRB(10.0, 10, 10, 20),
                 child: Text(
                   "Get Started ➜",
                   style: TextStyle(fontFamily: 'Roboto Regular', fontSize: 25),
