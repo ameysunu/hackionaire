@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-final firestoreInstance = FirebaseFirestore.instance;
+Future<DocumentSnapshot> getUserInfo() async {
+  return await FirebaseFirestore.instance.doc('appointments/new').get();
+}
 
 class Appointments extends StatefulWidget {
   @override
@@ -25,100 +27,78 @@ class _AppointmentsState extends State<Appointments> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 1,
-                  child: Card(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                "10:00AM -12:00PM",
-                                style: TextStyle(fontFamily: 'Roboto Medium'),
+              FutureBuilder(
+                  future: getUserInfo(),
+                  builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: 1,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 1,
+                                child: Card(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Text(
+                                              snapshot.data.data()['time'],
+                                              style: TextStyle(
+                                                  fontFamily: 'Roboto Medium'),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                10.0, 0, 10, 10),
+                                            child: Text(
+                                              snapshot.data.data()['name'],
+                                              style: TextStyle(
+                                                  fontFamily: 'Roboto Medium',
+                                                  fontSize: 20),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: CircleAvatar(
+                                          backgroundColor: HexColor('#D3B3FF'),
+                                          radius: 40,
+                                          child: Text(
+                                            snapshot.data.data()['topic'],
+                                            style: TextStyle(
+                                                fontFamily: 'Roboto Medium',
+                                                color: HexColor('#4B4453')),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(10.0, 0, 10, 10),
-                              child: Text(
-                                "MOM",
-                                style: TextStyle(
-                                    fontFamily: 'Roboto Medium', fontSize: 20),
-                              ),
-                            )
-                          ],
+                            );
+                          });
+                    }
+                    if (snapshot.hasError) {
+                      return Text("Something went wrong");
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Container(
+                        child: Center(
+                          child: CircularProgressIndicator(),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: CircleAvatar(
-                            backgroundColor: HexColor('#D3B3FF'),
-                            radius: 40,
-                            child: Text(
-                              "College",
-                              style: TextStyle(
-                                  fontFamily: 'Roboto Medium',
-                                  color: HexColor('#4B4453')),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 1,
-                  child: Card(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                "12:30PM -13:00PM",
-                                style: TextStyle(fontFamily: 'Roboto Medium'),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(10.0, 0, 10, 10),
-                              child: Text(
-                                "BECKY",
-                                style: TextStyle(
-                                    fontFamily: 'Roboto Medium', fontSize: 20),
-                              ),
-                            )
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: CircleAvatar(
-                            backgroundColor: HexColor('#D3B3FF'),
-                            radius: 40,
-                            child: Text(
-                              "Netflix",
-                              style: TextStyle(
-                                  fontFamily: 'Roboto Medium',
-                                  color: HexColor('#4B4453')),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+                      );
+                    }
+                  }),
             ],
           ),
         ),
