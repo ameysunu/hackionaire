@@ -107,18 +107,41 @@ class _AppointmentsState extends State<Appointments> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: HexColor('#00A0CF'),
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return Add();
-              },
-            ),
-          );
-        },
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            backgroundColor: HexColor('#009CED'),
+            child: Icon(Icons.add),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return Add();
+                  },
+                ),
+              );
+            },
+            heroTag: null,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          FloatingActionButton(
+            backgroundColor: HexColor('#374B43'),
+            child: Icon(Icons.chat),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return Add();
+                  },
+                ),
+              );
+            },
+            heroTag: null,
+          ),
+        ],
       ),
     );
   }
