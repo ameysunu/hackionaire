@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:hackionaire/chatbot.dart';
 import 'package:hackionaire/family.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -134,7 +135,7 @@ class _AppointmentsState extends State<Appointments> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {
-                    return Add();
+                    return Chat();
                   },
                 ),
               );
