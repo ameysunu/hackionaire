@@ -1,6 +1,6 @@
 library http_api_example;
 
-import 'package:owl/annotation/http.dart';
+import 'package:owl_sql/owl_sql.dart' as owl;
 
 @JsonClass()
 class Details {
@@ -16,10 +16,16 @@ class Status {
   String message;
 }
 
+class JsonClass {
+  const JsonClass();
+
+}
+
 /// API example.
 @HttpApi(rootPath: '/api/content/v1', functions: const <HttpFunction>[
   const HttpFunction('/ping', name: 'name'),
   const HttpFunction('/appointments/users/{id}',
+  owl.SqlType
       method: HttpMethod.POST, request: Details, response: Status),
   const HttpFn('/appointments/users/{id}',
       method: HttpMethod.UPDATE, response: Status),
